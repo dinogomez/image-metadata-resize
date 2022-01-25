@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>image-metadata-resize</title>
+
+    <script>
+
+    function getMeta(url, callback) {   
+      var image = new Image();
+      image.src = url;
+      image.onload = function() {
+        var result = [this.width, this.height];
+        callback(result);
+      };    
+
+      }
+      function getImg(){
+        
+        var url=document.getElementById('txt').value;
+        let dimensions;
+        getMeta(url, function(dimensions){
+          var div=document.createElement('div');
+          div.className="responsive-img-container bg-danger text-center m-0";
+          var img=document.createElement('img');
+
+          console.log("w:"+dimensions[0]+"h:"+dimensions[1])
+          
+          if(dimensions[0] < dimensions[1]){
+          console.log("TRUE - LESSER")
+          img.className="responsive-img-lesser";
+        } else {
+          console.log("FALSE")
+          img.className="responsive-img";
+        }
+        img.src=url;
+        div.appendChild(img);
+        document.getElementById('images').appendChild(div);
+        });
+
+
+        return false;
+    }
+
+    
+    </script>
+
+    <style>
+      .responsive-img{
+        width: 100%;
+        max-height: 100%;
+      }
+
+      .responsive-img-lesser{
+        max-height: 100%;
+      }
+      
+      .responsive-img-container{
+        width: 400px;
+        height: 200px;
+        margin: 0 !important;
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        overflow:hidden
+
+      }
+    </style>
+</head>
+<body>
+
+    <div class="container py-4">
+     
+    
+        <div class="px-5 rounded-3">
+          <div class="container-fluid py-5">
+            <h1 class="font-rubik" style="font-size: 64px; font-weight: 700; line-height: 96px;">Image Resize on metadata</h1>
+
+            <p class="col-md-8 font-rubik" >get image's metadata like <b>width</b> and <b>height</b> on a asynch call then process the 
+              image via a callback function. This example will fit and stretch to its parent div any landscape images while keep portrait images as default dynamically.
+            </p>
+            <hr>
+            <div class="mb-4 mt-5 rounded-3">
+              <div class="text-rubik">
+                <h1 class="font-rubik" style="font-size: 36px; font-weight: 700; line-height: 40px; ">Tested Links 🔗</h1>
+                <ul>
+                  <li>https://cdn.wallpapersafari.com/82/74/l94ZYt.jpg <span class="text-danger">1920x1080</span></li>
+                  <li>https://scontent.fmnl2-1.fna.fbcdn.net/v/t1.15752-9/271537387_526615638558778_7138576446215987069_n.png?_nc_cat=105&ccb=1-5&_nc_sid=ae9488&_nc_eui2=AeHvu2nnae_NgjpV2tOn2HSt2qYJjkPi_W3apgmOQ-L9bTVl55_6opVn_E_woa2nG02z_K2Aib-5g_iy4KNX5o0u&_nc_ohc=p8sijJwhjt4AX_SilAd&tn=9PnWibLx7kjxWoAC&_nc_ht=scontent.fmnl2-1.fna&oh=03_AVLBBYbZ2nD-awJdu66TdYqxaLw-BYUGyk82wXl9vjWd-A&oe=6215C918 <span class="text-danger">327x408</span></li>
+                  <li>https://i.pinimg.com/236x/37/09/b5/3709b54836d778a366de9bdd6458a85a--internet-marketing-media-marketing.jpg <span class="text-danger">236x1737</span></li>
+                  <li>https://baxcompany.com/wp-content/uploads/2017/08/300x150.png <span class="text-danger">236x1737</span></li>
+  
+                </ul>
+              </div>
+              <h1 class="font-rubik" style="font-size: 36px; font-weight: 700; line-height: 40px;">Get Image 🖥️</h1>
+              <label for="exampleInputEmail1" class="form-label font-rubik" style="font-size: 20px; font-weight: 400; line-height: 40px;" >Test Image : <span class="fs-bolder text-danger">400x200</span></label>
+  
+              <div class="responsive-img-container bg-success"></div>
+              <form class="mt-3 form-inline">
+  
+                <div class="input-group mb-3">
+                  <input class="form-control"  type="text" id="txt" value="">
+                  <input class="btn btn-dark p-3" id="btn" type="button" value="Get Image" onclick="getImg();" />
+                </div>
+               
+                </form>
+                <br /><br />
+                
+                <div id="images"></div>
+  
+          </div>
+          </div>
+        </div>
+
+       
+
+      
+
+       
+    
+    
+        </div>
+   
+    
+        
+      </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</body>
+</html>
